@@ -1,0 +1,26 @@
+<div>
+  <input [(ngModel)]="searchTerm" placeholder="Search items" />
+</div>
+<ul>
+  <li *ngFor="let category of filteredItems">
+    <strong (click)="toggleCategory(category.name)" style="cursor: pointer;">
+      {{ category.name }}
+      <span *ngIf="isCategoryExpanded(category.name)">[-]</span>
+      <span *ngIf="!isCategoryExpanded(category.name)">[+]</span>
+    </strong>
+    <ul [ngClass]="{'hide': !isCategoryExpanded(category.name)}">
+      <li *ngFor="let subcategory of category.subcategories">
+        <span (click)="toggleSubcategory(category.name, subcategory.name)" style="cursor: pointer;">
+          {{ subcategory.name }}
+          <span *ngIf="isSubcategoryExpanded(category.name, subcategory.name)">[-]</span>
+          <span *ngIf="!isSubcategoryExpanded(category.name, subcategory.name)">[+]</span>
+        </span>
+        <ul [ngClass]="{'hide': !isSubcategoryExpanded(category.name, subcategory.name)}">
+          <li *ngFor="let item of subcategory.items">
+            {{ item.name }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
